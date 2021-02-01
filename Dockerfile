@@ -33,7 +33,7 @@ FROM ubuntu:20.04 AS app
 ENV LANG=C.UTF-8
 
 # Install openssl
-RUN apt-get update && apt-get install -y openssl
+RUN apt-get update && apt-get install -y openssl postgresql-client
 
 # Copy over the build artifact from the previous step and create a non root user
 RUN useradd --create-home app
@@ -42,5 +42,7 @@ COPY --from=app_builder /app/_build .
 RUN chown -R app: ./prod
 USER app
 
+COPY entrypoint.sh .
+
 # Run the Phoenix app
-CMD ["./prod/rel/my_docker_app/bin/my_docker_app", "start"]
+ENTRYPOINT ./entrypoint.sh
