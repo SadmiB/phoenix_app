@@ -28,7 +28,7 @@ RUN mix phx.digest
 RUN mix release
 
 # ---- Application Stage ----
-FROM elixir:1.11.2 AS app
+FROM ubuntu:20.04 AS app
 
 ENV LANG=C.UTF-8
 
